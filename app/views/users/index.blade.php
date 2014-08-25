@@ -10,6 +10,7 @@
 <table class="table table-striped table-bordered">
     <thead>
     <tr>
+        <th>Photo</th>
         <th>Username</th>
         <th>Password</th>
         <th>Email</th>
@@ -21,6 +22,7 @@
     <tbody>
     @foreach ($users as $user)
     <tr>
+        <td>{{ HTML::image("upload/$user->photo", 'a picture', array('width' => '50')) }}</td>
         <td>{{ $user->username }}</td>
         <td>{{ $user->password }}</td>
         <td>{{ $user->email }}</td>

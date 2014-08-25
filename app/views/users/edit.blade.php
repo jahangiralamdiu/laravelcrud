@@ -3,7 +3,7 @@
 @section('main')
 
 <h1>Edit User</h1>
-{{ Form::model($user, array('method' => 'PATCH', 'route' =>
+{{ Form::model($user, array('method' => 'PATCH', 'files' => true, 'route' =>
 array('users.update', $user->id))) }}
 <ul>
     <li>
@@ -26,6 +26,12 @@ array('users.update', $user->id))) }}
         {{ Form::label('name', 'Name:') }}
         {{ Form::text('name') }}
     </li>
+
+    <li>
+        {{ Form::label('photo','Image:') }}
+        {{ Form::file('photo') }}
+    </li>
+
     <li>
         {{ Form::submit('Update', array('class' => 'btn btn-info')) }}
         {{ link_to_route('users.show', 'Cancel', $user->

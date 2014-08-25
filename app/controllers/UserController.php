@@ -36,12 +36,10 @@ class UserController extends \BaseController {
         $input = Input::all();
         $validation = Validator::make($input, User::$rules);
         $file = Input::file('photo');
-        $destination="/";
-
 
         if ($validation->passes())
         {
-            User::create($input);
+            $post = User::create($input);
 
             if (Input::hasFile('photo'))
             {
@@ -50,6 +48,9 @@ class UserController extends \BaseController {
                     $name = Input::file('photo')->getClientOriginalName();
                     $extension = Input::file('photo')->getClientOriginalExtension();
                     Input::file('photo')->move('public/upload', $name);
+
+                    $post->photo=$name;
+                    $post->save();
                 }
             }
             else
@@ -108,12 +109,31 @@ class UserController extends \BaseController {
 	public function update($id)
 	{
         $input = Input::all();
+
         $validation = Validator::make($input, User::$rules);
+
+        $file = Input::file('photo');
+
+
         if ($validation->passes())
         {
             $user = User::find($id);
-            $user->update($input);
-            return Redirect::route('users.index');
+
+            $post=$user->update($input);
+
+//            if (Input::hasFile('photo'))
+//            {
+//                if (Input::file('photo')->isValid())
+//                {
+//                    $name = Input::file('photo')->getClientOriginalName();
+//                    $extension = Input::file('photo')->getClientOriginalExtension();
+//                    Input::file('photo')->move('public/upload', $name);
+//
+//                    $post->photo=$name;
+//                    $post->save();
+//                }
+//            }
+          return Redirect::route('users.index');
         }
         return Redirect::route('users.edit', $id)
             ->withInput()
