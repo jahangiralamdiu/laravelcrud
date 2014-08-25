@@ -4,7 +4,7 @@
 
 <h1>Create User</h1>
 
-{{ Form::open(array('route' => 'users.store')) }}
+{{ Form::open(array('route' => 'users.store', 'files'=>true)) }}
 <ul>
 
     <li>
@@ -37,6 +37,10 @@
         {{ Form::text('phone') }}
     </li>
 
+    <li>
+        {{ Form::label('photo','Image:') }}
+        {{ Form::file('photo') }}
+    </li>
 
     <li>
         {{ Form::submit('Submit', array('class' => 'btn')) }}

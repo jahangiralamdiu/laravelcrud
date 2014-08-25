@@ -35,12 +35,32 @@ class UserController extends \BaseController {
 	{
         $input = Input::all();
         $validation = Validator::make($input, User::$rules);
+        $file = Input::file('photo');
+        $destination="/";
+
 
         if ($validation->passes())
         {
             User::create($input);
 
-            return Redirect::route('users.index');
+            if (Input::hasFile('photo'))
+            {
+                if (Input::file('photo')->isValid())
+                {
+                    $name = Input::file('photo')->getClientOriginalName();
+                    $extension = Input::file('photo')->getClientOriginalExtension();
+                    Input::file('photo')->move('public/upload', $name);
+                }
+            }
+            else
+            {
+                $message = "you must provide a valid photo";
+            }
+
+            $message = "you must provide a valid photo";
+
+            return Redirect::route('users.index')->with('message', 'User Created Successfully');
+
         }
 
         return Redirect::route('users.create')
